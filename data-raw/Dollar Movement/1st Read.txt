@@ -1,0 +1,19 @@
+Geographical Movement of One Dollar Notes between the 12 Federal Reserve Board districts, observed 
+in a sample taken in February 1976 (after Pignatello 1977). File 'Dollar.tbl' contains the values, 
+in hundreds. Rows are the FROM places, columns are the TO places.
+
+X. Y coordinates are in kilometers on a local map projection of the United States (Tobler 1974) 
+and are centroids within each Federal Reserve Board district. This is file 'DlrXY.pts'
+
+The 'UsaBdy.ply' file uses these same coordinates for a simplified US outline.
+Names of the FRB districts are in the File 'FRB Names.txt'
+
+For more information on the source of the federal reserve note movement see the power point 
+presentation under movement at http://www.geog.ucsb.edu/~tobler 
+and the reprints on geographic movement on the same web site. 
+
+Several maps illustrate some of the variety available with the flow mapping program.
+
+A separate folder, FRB_BNDs, contains the polygons including the FRB districts (except Alaska & 
+Hawaii), but in a different coordinate system, in FRBbnds.Ply. FRBcenters.pts contains the 
+centroids for these regions in the same coordinate system.

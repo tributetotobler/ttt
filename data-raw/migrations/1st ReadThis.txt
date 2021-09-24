@@ -1,0 +1,35 @@
+
+ This file contains the                           
+
+              1935-1940
+              1949-1950
+              1955-1960
+              1965-1970
+              1975-1980
+              1985-1990
+              1995-2000		
+
+ State to State migration tables, with Alaska, Washington DC, and Hawaii
+ (arbitrarily) deleted. Some of the files have the diagonal entries set 
+ to zero. You can check the tables against Census Document
+ PC80-S1-9 "State of Residence in 1975 by State of Residence in 1980", 1980
+ Census of Population Supplementary Report, March 1983. The remaining
+ tables came from comparable earlier reports. For reasons which I cannot
+ recall, the 49-50 table is in 10's of people, the 55-60 and 65-70 tables
+ are in 100's of persons. All of the tables have been converted to
+ alphabetical order from the regional order used by the Census Bureau. The
+ rows of the tables are the FROM places; the columns are the TO places.
+ The 1984-1985 & 1994-1995 tables are from the IRS estimates.
+ Also included is a boundary file, centroid and names files for the CSISS 
+ flow mapper program (CSISS.org/Spatial Tools/Flow Mapper).
+
+ I hope that you find these useful. Please bring any errors which you
+ detect to my attention.
+
+ Waldo Tobler						8/18/2004
+ Geography Department
+ University of California
+ Santa Barbara CA 93106
+ (805) 964-0116
+ tobler@geog.ucsb.edu
+

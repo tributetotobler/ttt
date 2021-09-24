@@ -1,0 +1,28 @@
+Package: ttt
+Title: Tribute to Tobler
+Version: 0.1.0
+Authors@R: c(
+      person("Etienne", "Come", 
+        email = "etienne.come@univ-eiffel.fr", role = c("cre","aut")), 
+      person("Nicolas", "Lambert", 
+           email = "nicolas.lambert@cnrs.fr", role = "aut",
+           comment = c(ORCID = "0000-0003-4976-6560")),
+      person("Françoise", "Bahoken", 
+        email = "francoise.bahoken@univ-eiffel.fr", role = "aut"),
+      person("Anne-Christine", "Bronner", 
+        email = "anne-christine.bronner@misha.fr", role = "aut"),
+      person("Laurent", "Jégou", 
+        email = "ljegou@gmail.com", role = "aut"),
+      person("Gilles", "Vuidel", 
+        email = "gilles.vuidel@univ-fcomte.fr", role = "aut"))
+Description: "Everything is related to everything else, but near things are more related than distant things." (Tobler W., 1970) 
+License: GPL-3
+Imports: sf,Matrix,igraph
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Suggests: 
+    knitr,
+    rmarkdown,
+    smoothr
+VignetteBuilder: knitr

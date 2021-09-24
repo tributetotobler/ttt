@@ -1,0 +1,69 @@
+ 
+---
+title: "Potflows"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Potflows}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ttt)
+library(sf)
+library(dplyr)
+library(ggplot2)
+```
+
+## Potential and flows dollars data
+
+```{r dollars,fig.width=10,fig.height=7}
+data("dollars")
+vintageframe(dollars$polygones)
+delta = rowSums(dollars$OD)-colSums(dollars$OD)
+dollars$polygones$delta=delta
+plot(st_geometry(dollars$polygones),add=TRUE)
+plusmoins(dollars$polygones,"delta")
+```
+
+```{r dollarspot,fig.width=10,fig.height=7,}
+pot.dollars = poisson.potential(dollars$polygones)
+plot(pot.dollars%>%select(attractivity))
+```
+
+```{r dollarsflow,fig.width=10,fig.height=7,warning=FALSE}
+par(mar=c(0,0,0,0))
+vintageframe(dollars$polygones)
+plot(st_geometry(dollars$polygones),add=TRUE)
+poisson.flows(pot.dollars,normfact = 0.01)
+```
+
+## Potential and flows us migrations 65-70
+
+
+```{r mig,fig.width=10,fig.height=7}
+data("usmigrations")
+vintageframe(usmigrations)
+plot(st_geometry(usmigrations),add=TRUE)
+plusmoins(usmigrations,"delta7580")
+```
+
+```{r migrpot,fig.width=10,fig.height=7}
+data("usmigrations")
+pot.migr = poisson.potential(usmigrations,"delta6570")
+plot(pot.migr%>%select(attractivity))
+```
+
+```{r migrflow,fig.width=10,fig.height=7,warning=FALSE}
+par(mar=c(0,0,0,0))
+vintageframe(usmigrations)
+plot(st_union(usmigrations),add = TRUE)
+poisson.flows(pot.migr,normfact = 100)
+```

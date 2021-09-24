@@ -1,0 +1,13 @@
+label,id,x,y,delta
+Boston,boston,2259,638,494
+New York,newyork,2085,384,-670
+Philadelphia,philadelphia,1992,280,-741
+Cleveland,cleveland,1406,321,79
+Richmond,richmond,1862,-42,-177
+Atlanta,atlanta,1283,-357,428
+Chicago,chicago,897,278,1342
+St. Louis,stlouis,723,-97,-1166
+Minneapolis,minneapolis,421,587,202
+Kansas City,kansascity,348,-81,-58
+Dallas,dallas,168,-781,-552
+San Fransisco,sanfransisco,-2126,48,818
