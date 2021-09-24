@@ -18,7 +18,7 @@
 #' @param df2id name of the numeric field in df2, default is "id"
 #' @param df2var name of the numeric variable to plot circles.
 #' @param k2 value to increase or decrease the size of the circles (in units of the map), default is NULL. To be improved...
-#' @param col2 color of circles, default is NULL.
+#' @param col2 color of circles, default is "white"
 #' @param border2 color of circles borders, default is "black".
 #' @param lwd2 circle borders width, default is 2.
 #' @param plot display or not the map, default = TRUE
@@ -118,12 +118,11 @@ ttt_flowmapper <- function(
   df2id = "id",
   df2var,
   k2 = NULL,
-  col2 = NULL,
+  col2 = "white",
   border2 = "black",
   lwd2 = 2,
   plot = TRUE
 ){
-
 
   links <- getlinks(x, df, xid, dfid, dfvar)
 

@@ -61,11 +61,12 @@ getdots <- function(x, xid, k = NULL){
     bb <- st_bbox(x)
     k <- max(bb$xmax - bb$xmin, bb$ymax - bb$ymin)/300
   }
-
+  
   dots <- sf::st_centroid(x = sf::st_geometry(x),of_largest_polygon = max(sf::st_is(sf::st_as_sf(x), "MULTIPOLYGON")))
-  dots <- st_sf(x[,xid] %>% st_drop_geometry(), dots)
+  dots <- st_sf(x[,xid] %>% st_drop_geometry(), geometry = dots)
   dots[,"r"] <- k
   circles <- st_buffer(dots, k)
+  circles = circles[,c("id","r","geometry")]
   return(circles)
 }
 
