@@ -1,6 +1,7 @@
 # Poisson potential
 #
-# Compute the attractivity potential on a grid from balance value on polygon following the method of tobleR.
+# 
+# Compute the attractivity potential on a grid from balance value on polygon following the method of Tobler.
 # TTT equivalent of the potflow program of Waldo Tobler
 # 'POTENTIAL FIELD FROM DATA GIVEN BY POLYGONS CONVERTED
 # 'TO A LATTICE USING THE POLYGRID PROGRAM.
@@ -239,6 +240,15 @@ balance = function(OD){
   balance
 }
 
+#' @export
+#' winds(pot,nbparticules = 1000,lifespan = 50,resolution = 0.2,scalefact = 0.1)
+winds =function(pot, lifespan=5,scalefact=0.1,linewidth=1,nbparticules=500,resolution=sf::st_bbox(pot[1,])[3]-sf::st_bbox(pot[1,])[1]){
+  inputs=list(data=pot,params=list(
+    lifespan=lifespan,scalefact=scalefact,linewidth=linewidth,nbparticules=nbparticules,resolution=resolution          
+    ))
+  r2d3(inputs,script = "./d3/winds.js",container = "canvas",d3_version = 5)
+}
+  
 
 
 
