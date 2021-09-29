@@ -4,6 +4,8 @@
 #' @param x flow generetd with the function plotflows(). list.
 #' @param title title of the legend (flows), default is "Title".
 #' @param title2 title of the legend (circles), default is NULL.
+#' @param col color of the legend, default is #CCCCC
+#' @param txtcol color of the text, default is black
 #' @export
 #' @examples
 #' library(sf)
@@ -36,11 +38,9 @@
 #'
 #' ttt_flowmapperlegend(x = flows, title = "inter", title2 = "intra")
 
-ttt_flowmapperlegend <- function(x, pos = NULL, title = "Title 1", title2 = NULL) {
+ttt_flowmapperlegend <- function(x, pos = NULL, title = "Title 1", title2 = NULL, col = "#CCCCCC", txtcol = "black") {
 # Vars
 
-col = "white"
-border = "black"
 lwd = 1
 values.cex = 0.6
 values.round = 0
@@ -78,9 +78,9 @@ title.font = 2
                 posy <- pos[2] + radii[i]
                 p <- st_sfc(st_point(c(posx,posy)))
                 circle <- st_buffer(st_as_sf(p), dist = radii[i])
-                plot(circle, col = col, border = border, lwd=lwd, add=T)
+                plot(circle, col = col, border = col, lwd=lwd, add=T)
                 # lines
-                segments(posx, posy + radii[i], posx + radii[1] + radii[1]/10, col = border, lwd=lwd, lty = lty)
+                segments(posx, posy + radii[i], posx + radii[1] + radii[1]/10, col = txtcol, lwd=lwd, lty = lty)
                 # texts
                 text(x = posx + radii[1] + radii[1]/5, y = posy + radii[i],
                      labels = formatC(round(values[i],values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex)
@@ -103,23 +103,23 @@ title.font = 2
         deltax <- (bb$xmax - bb$xmin) / 10
         rectmax <- st_as_sfc(paste0("POLYGON((",0," ",0,", ",width," ",0,", ",width," ",hmax,", ",0," ",hmax,", ",0," ",0,"))")) + pos + c(max(radii) + deltax,0)
         rectmin <- st_as_sfc(paste0("POLYGON((",0," ",0,", ",width," ",0,", ",width," ",hmin,", ",0," ",hmin,", ",0," ",0,"))")) + pos + c(max(radii) + deltax,0)
-        segments(pos[1] + max(radii) + width + deltax, pos[2] + hmin, pos[1] + max(radii) + width + deltax + width/4, pos[2] + hmin, col = border, lwd=lwd, lty = lty)
-        segments(pos[1] + max(radii) + width + deltax, pos[2] + hmax, pos[1] + max(radii) + width + deltax + width/4, pos[2] + hmax, col = border, lwd=lwd, lty = lty)
-        plot(rectmax, add= TRUE)
-        plot(rectmin, add= TRUE)
+        segments(pos[1] + max(radii) + width + deltax, pos[2] + hmin, pos[1] + max(radii) + width + deltax + width/4, pos[2] + hmin, col = txtcol, lwd=lwd, lty = lty)
+        segments(pos[1] + max(radii) + width + deltax, pos[2] + hmax, pos[1] + max(radii) + width + deltax + width/4, pos[2] + hmax, col = txtcol, lwd=lwd, lty = lty)
+        plot(rectmax, add= TRUE, col = col, border = txtcol)
+        plot(rectmin, add= TRUE, col = col, border = txtcol)
         vals <- flows[[2]][,2] %>% st_drop_geometry()
         text(x = pos[1] + max(radii) + width + deltax + width/4 + width/8 , y = pos[2] + hmin,
-             labels = formatC(round(min(vals),values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex)
+             labels = formatC(round(min(vals),values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex, col=txtcol)
 
         text(x = pos[1] + max(radii) + width + deltax + width/4 + width/8, y = pos[2] + hmax,
-             labels = formatC(round(max(vals),values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex)
+             labels = formatC(round(max(vals),values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex, col = txtcol)
 
         text(x = pos[1] + max(radii) + width/2 + deltax, y = pos[2] + (hmax - hmin)/2,
-             labels = "(thickness)", adj = c(0.5,0), cex = 0.6)
+             labels = "(thickness)", adj = c(0.5,0), cex = 0.6, col = txtcol)
 
         # Title
         text(x = pos[1] + max(radii) + deltax ,y = pos[2] + hmax  + radii[1]/3, title,
-             adj = c(0,0), cex = title.cex, font = title.font)
+             adj = c(0,0), cex = title.cex, font = title.font, col = txtcol)
 
         }
 
@@ -136,23 +136,23 @@ title.font = 2
                 deltax <- (bb$xmax - bb$xmin) / 10
                 rectmax <- st_as_sfc(paste0("POLYGON((",0," ",0,", ",hmax," ",0,", ",hmax," ",hmax,", ",0," ",hmax,", ",0," ",0,"))")) + pos + c(max(radii) + deltax,0)
                 rectmin <- st_as_sfc(paste0("POLYGON((",0," ",0,", ",hmin," ",0,", ",hmin," ",hmin,", ",0," ",hmin,", ",0," ",0,"))")) + pos + c(max(radii) + deltax + hmax - hmin,0)
-                segments(pos[1] + max(radii) + hmax + deltax, pos[2] + hmin, pos[1] + max(radii) + hmax + deltax + width/4, pos[2] + hmin, col = border, lwd=lwd, lty = lty)
-                segments(pos[1] + max(radii) + hmax + deltax, pos[2] + hmax, pos[1] + max(radii) + hmax + deltax + width/4, pos[2] + hmax, col = border, lwd=lwd, lty = lty)
-                plot(rectmax, add= TRUE)
-                plot(rectmin, add= TRUE)
+                segments(pos[1] + max(radii) + hmax + deltax, pos[2] + hmin, pos[1] + max(radii) + hmax + deltax + width/4, pos[2] + hmin, col = txtcol, lwd=lwd, lty = lty)
+                segments(pos[1] + max(radii) + hmax + deltax, pos[2] + hmax, pos[1] + max(radii) + hmax + deltax + width/4, pos[2] + hmax, col = txtcol, lwd=lwd, lty = lty)
+                plot(rectmax, add= TRUE, border = txtcol)
+                plot(rectmin, add= TRUE, border = txtcol)
                 vals <- flows[[2]][,2] %>% st_drop_geometry()
                 text(x = pos[1] + max(radii) + hmax + deltax + width/4 + width/8 , y = pos[2] + hmin,
-                     labels = formatC(round(min(vals),values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex)
+                     labels = formatC(round(min(vals),values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex, col =txtcol)
 
                 text(x = pos[1] + max(radii) + hmax + deltax + width/4 + width/8, y = pos[2] + hmax,
-                     labels = formatC(round(max(vals),values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex)
+                     labels = formatC(round(max(vals),values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex, col = txtcol)
 
                 text(x = pos[1] + max(radii) + hmax/2 + deltax, y = pos[2] + hmax/2,
-                     labels = "(area)", adj = c(0.5,0), cex = 0.6)
+                     labels = "(area)", adj = c(0.5,0), cex = 0.6, col = txtcol)
 
                 # Title
                 text(x = pos[1] + max(radii) + deltax ,y = pos[2] + hmax  + radii[1]/3, title,
-                     adj = c(0,0), cex = title.cex, font = title.font)
+                     adj = c(0,0), cex = title.cex, font = title.font, col = txtcol)
 
 
 
