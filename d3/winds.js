@@ -5,7 +5,7 @@
 
 let context = canvas.node().getContext("2d");
 const margin = 30;
-const fadeFillStyle = "rgba(0, 0, 0, 0.95)";
+const fadeFillStyle = "rgba(0, 0, 0, 0.9)";
 const lifespan = data.params.lifespan;
 const scalefact = data.params.scalefact;
 const linewidth = data.params.linewidth;
@@ -43,7 +43,7 @@ data.forEach(function(cell){
   cell.j=Math.round((cell.y-my)/resolution);
 });
 
-console.log(JSON.stringify(data[0]))
+
 
 let ijmap = d3.nest().key(cell => cell.i).key(cell => cell.j).rollup(cells => cells[0]).map(data);
 let ikeys = Object.keys(ijmap);
@@ -63,6 +63,7 @@ get_grad = function(x,y){
   return {dx:dx*scalefact,dy:dy*scalefact} ;
 };
 
+
 sample_pos=function(){
   let i = ikeys[Math.floor(Math.random()*ikeys.length)];
   let jkeys = Object.keys(ijmap[i]);
@@ -73,25 +74,28 @@ sample_pos=function(){
 const particles = [];
 for (var i=0;i<nbparticules;i++){
   par = sample_pos();
-  par.dx=0;
-  par.dy=0;
+  grad = get_grad(par.x,par.y);
+  par.dx = grad.dx;
+  par.dy = grad.dy;
   par.nbc=Math.floor(Math.random()*lifespan);
   particles.push(par);
 }
 
 
+console.log([particles[0].x,particles[0].y,particles[0].dx,particles[0].dy,particles[0].nbc])
+
 context.canvas.style.background = "#ffffff";
 context.lineWidth = linewidth;
 context.fillStyle = fadeFillStyle;
-context.strokeStyle = "#66a61e";
-context.beginPath();
-context.rect(0,0, width, height);
-context.fillStyle = "white";
-context.fill();
+context.strokeStyle = "#555555";
+
+
+
 
 const nb_an =5000;
 
 var update = function () {
+    context.lineWidth = linewidth;
     var prev = context.globalCompositeOperation;
     context.globalCompositeOperation = "destination-in";
     context.fillRect(0,0, width, height);
@@ -120,8 +124,9 @@ var update = function () {
     i++;
     requestAnimationFrame(update);
 };
+
 requestAnimationFrame(update);
-  
+
   
 
 
