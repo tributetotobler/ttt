@@ -4,7 +4,14 @@
 \alias{ttt_flowmapperlegend}
 \title{Flowmapper Legend}
 \usage{
-ttt_flowmapperlegend(x, pos = NULL, title = "Title 1", title2 = NULL)
+ttt_flowmapperlegend(
+  x,
+  pos = NULL,
+  title = "Title 1",
+  title2 = NULL,
+  col = "#CCCCCC",
+  txtcol = "black"
+)
 }
 \arguments{
 \item{x}{flow generetd with the function plotflows(). list.}
@@ -12,6 +19,10 @@ ttt_flowmapperlegend(x, pos = NULL, title = "Title 1", title2 = NULL)
 \item{title}{title of the legend (flows), default is "Title".}
 
 \item{title2}{title of the legend (circles), default is NULL.}
+
+\item{col}{color of the legend, default is #CCCCC}
+
+\item{txtcol}{color of the text, default is black}
 }
 \description{
 Build flowmaps legend

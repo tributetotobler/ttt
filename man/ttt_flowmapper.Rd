@@ -22,7 +22,7 @@ ttt_flowmapper(
   df2id = "id",
   df2var,
   k2 = NULL,
-  col2 = NULL,
+  col2 = "white",
   border2 = "black",
   lwd2 = 2,
   plot = TRUE
@@ -63,7 +63,7 @@ ttt_flowmapper(
 
 \item{k2}{value to increase or decrease the size of the circles (in units of the map), default is NULL. To be improved...}
 
-\item{col2}{color of circles, default is NULL.}
+\item{col2}{color of circles, default is "white"}
 
 \item{border2}{color of circles borders, default is "black".}
 

@@ -1,11 +1,12 @@
-# create a vintage frame !
+#' Create a vintage frame !
+#'
 #' @param x An \code{\link{sf}} object 
-#' @return 
+#' @return a plot
 #' @examples
 #' data(dollars)
-#' vintageframe(dollars$polygones)
+#' vintage_frame(dollars$polygones)
 #' @export 
-vintageframe = function(x){
+vintage_frame = function(x){
   bb = sf::st_bbox(x)
   d  = (bb[3]-bb[1])/50
   bb = bb+c(-d,-d,d,d)
@@ -16,18 +17,20 @@ vintageframe = function(x){
 }
 
 
-# create a +- map !
-#' @param xsf An \code{\link{sf}} object with poylgones
-#' @param varname The name 
-#' @value 
+#' Create a +- map !
+#' 
+#' @param xsf An \code{\link{sf}} object with poylgones or points
+#' @param varname The name of the column that store the balances to plot
+#' @return a plot 
 #' @examples
 #' data(dollars)
-#' vintageframe(dollars$polygones)
+#' vintage_frame(dollars$polygones)
+#' dollars$polygones$delta = rowSums(dollars$OD)-colSums(dollars$OD)
+#' plus_minus_map(dollars$polygones,"delta")
 #' @export 
-plusmoins =function(xsf,varname){
+plus_minus_map =function(xsf,varname){
   pts=sf::st_centroid(st_geometry(xsf))
   vals = xsf[[varname]]
-
   
   rpos = sqrt(vals[vals>0])
   rpos = rpos/max(rpos)*10

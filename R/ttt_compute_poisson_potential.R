@@ -1,15 +1,14 @@
-# Poisson potential
-#
-# 
-# Compute the attractivity potential on a grid from balance value on polygon following the method of Tobler.
-# TTT equivalent of the potflow program of Waldo Tobler
-# 'POTENTIAL FIELD FROM DATA GIVEN BY POLYGONS CONVERTED
-# 'TO A LATTICE USING THE POLYGRID PROGRAM.
-# 'COMPUTED AS THE SOLUTION TO THE POISSON EQUATION
-# 'WITH BOUNDARY CONDITION DZ/DN=0.
-# 'SUMMER 1978, REVISED, CONVERTED TO BASIC, SPRING 1994. Rev 6/8/98
-#' \code{poisson.potential} returns an sf
+#' Compute the attractivity potential on a grid from balance value on polygon following the method of Tobler.
 #'
+#' Compute the attractivity potential on a grid from balance value on polygon following the method of Tobler.
+#' TTT equivalent of the potflow program of Waldo Tobler
+#' POTENTIAL FIELD FROM DATA GIVEN BY POLYGONS CONVERTED
+#' TO A LATTICE USING THE POLYGRID PROGRAM.
+#' COMPUTED AS THE SOLUTION TO THE POISSON EQUATION
+#' WITH BOUNDARY CONDITION DZ/DN=0.
+#' SUMMER 1978, REVISED, CONVERTED TO BASIC, SPRING 1994. Rev 6/8/98
+#' \code{poisson.potential} returns an sf
+#
 #' @param xsf an sf data.frame of polygons
 #' @param varname name of the feature where the balance of each polygons are stored 
 #' @param method resolution method for poisson equation either jacobi or solve
@@ -17,8 +16,11 @@
 #' @param cellsize size of the 
 #' @return an sf data.frame with
 #' @examples
+#' data(dollars)
+#' dollars$polygones$delta = rowSums(dollars$OD)-colSums(dollars$OD)
+#' pot=compute_poisson_potential(dollars$polygones)
 #' @export
-poisson.potential <- function(xsf,varname="delta",method="jacobi",nb_it = 1000,cellsize=sqrt((sf::st_bbox(xsf)[3]-sf::st_bbox(xsf)[1])*(sf::st_bbox(xsf)[4]-sf::st_bbox(xsf)[2])/2500)) {
+compute_poisson_potential <- function(xsf,varname="delta",method="jacobi",nb_it = 1000,cellsize=sqrt((sf::st_bbox(xsf)[3]-sf::st_bbox(xsf)[1])*(sf::st_bbox(xsf)[4]-sf::st_bbox(xsf)[2])/2500)) {
 
   # grid construction
   cat("Building grid\n")
@@ -212,9 +214,12 @@ is.disconnected=function(nei){
 }
 
 
-# utils to show the flows
+#' Utils to show the flows derived from a poisson potential.
+#' @param xsf an \code{sf} data.frame as returned by \code{compute_poisson_potential}
+#' @param normfact a scalar (normalization factor for arrows length)
+#' @return an arrow plot
 #' @export
-poisson.flows = function(sf,normfact=0.1){
+poisson_flows_map = function(sf,normfact=0.1){
   bb = st_bbox(sf)
   width = bb[3]-bb[1]
   height = bb[4]-bb[2]
@@ -224,7 +229,9 @@ poisson.flows = function(sf,normfact=0.1){
   arrows(sf$x,sf$y,sf$x+sf$dx*normfact,sf$y+sf$dy*normfact,length = 0.03,lwd=lw)
 }
 
-# utils to convert potential to raster
+#' Utils to convert poisson potential to raster
+#' @param pot an \code{sf} data.frame as returned by \code{compute_poisson_potential}
+#' @return a \code{raster}  representation of the potential
 #' @export
 rasterFromPotential = function(pot){
   att = rasterFromXYZ(cbind(pot$x,pot$y,pot$attractivity),crs=sf:st_crs(pot)) 
@@ -240,8 +247,10 @@ balance = function(OD){
   balance
 }
 
-#' @export
+
+#' animated droplets map of poisson potentials results 
 #' winds(pot,nbparticules = 1000,lifespan = 50,resolution = 0.2,scalefact = 0.1)
+#' @export
 winds =function(pot, lifespan=5,scalefact=0.1,linewidth=1,nbparticules=500,resolution=sf::st_bbox(pot[1,])[3]-sf::st_bbox(pot[1,])[1]){
   inputs=list(data=pot,params=list(
     lifespan=lifespan,scalefact=scalefact,linewidth=linewidth,nbparticules=nbparticules,resolution=resolution          

@@ -15,7 +15,8 @@
 #' Lowup part of the matrix are:\cr
 #' - lowup ="up" for triangular part above the main diagonal \cr
 #' - lowup = "low" for triangular part below the main diagonal\cr
-#' @import dplyr, cartograflow
+#' @import dplyr
+#' @import cartograflow
 #' @importFrom rlang .data
 #' @examples
 #' #Example 1 : building gross flows
