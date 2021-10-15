@@ -78,17 +78,17 @@ title.font = 2
                 posy <- pos[2] + radii[i]
                 p <- st_sfc(st_point(c(posx,posy)))
                 circle <- st_buffer(st_as_sf(p), dist = radii[i])
-                plot(circle, col = col, border = col, lwd=lwd, add=T)
+                plot(circle, col = col, border = txtcol, lwd=lwd, add=T)
                 # lines
                 segments(posx, posy + radii[i], posx + radii[1] + radii[1]/10, col = txtcol, lwd=lwd, lty = lty)
                 # texts
                 text(x = posx + radii[1] + radii[1]/5, y = posy + radii[i],
-                     labels = formatC(round(values[i],values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex)
+                     labels = formatC(round(values[i],values.round), big.mark = " ", format = "fg", digits = values.round), adj = c(0,0.5), cex = values.cex, col = txtcol)
         }
 
         # Title
         text(x = posx - radii[1] ,y = posy + radii[1]*2 + radii[1]/3, title2,
-             adj = c(0,0), cex = title.cex, font = title.font)
+             adj = c(0,0), cex = title.cex, font = title.font, col = txtcol)
 }
 
 # flows (thickness)
